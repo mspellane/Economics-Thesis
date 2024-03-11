@@ -1,0 +1,10 @@
+csv <- read.csv(file="~/../dropbox/GMM/ReformattedVasciekData.csv")
+csv$Date <- as.Date(csv$Date,format="%m/%d/%Y")
+csv <- subset(csv, Date >= as.Date("1997-02-01"))
+csv <- subset(csv, Date <= as.Date("2017-12-31"))
+summary(csv)
+
+changes <- csv$FCMPSpread-csv$LAGFCMPSpread
+plot.default(cbind(csv$FCMPSpread,changes), xlab = "Level", ylab = "Change", main = "FCMPSpread- Levels over Changes in Levels")
+linmod <- lm(changes ~ csv$FCMPSpread)
+abline(a = coef(linmod)[1], b = coef(linmod)[2], untf = FALSE)
